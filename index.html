@@ -401,45 +401,6 @@
             margin-bottom: 2rem;
         }
 
-        /* Filters */
-        .filters {
-            background: white;
-            border-radius: var(--border-radius);
-            padding: 1.5rem;
-            margin-bottom: 2rem;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1rem;
-            align-items: center;
-        }
-
-        .filter-group {
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-        }
-
-        .filter-group label {
-            font-size: 0.9rem;
-            font-weight: 500;
-            color: var(--gray);
-        }
-
-        .filter-group select, .filter-group input {
-            padding: 0.7rem 1rem;
-            border: 2px solid var(--light-gray);
-            border-radius: 8px;
-            min-width: 150px;
-            font-size: 0.9rem;
-            transition: var(--transition);
-        }
-
-        .filter-group select:focus, .filter-group input:focus {
-            outline: none;
-            border-color: var(--primary);
-        }
-
         /* Loader and Error */
         .loader {
             display: flex;
@@ -480,41 +441,6 @@
         .error-icon {
             font-size: 4rem;
             color: var(--danger);
-        }
-
-        /* Pagination */
-        .pagination {
-            display: flex;
-            justify-content: center;
-            gap: 0.5rem;
-            margin-top: 3rem;
-            flex-wrap: wrap;
-        }
-
-        .page-btn {
-            padding: 0.7rem 1.2rem;
-            border: 2px solid var(--light-gray);
-            background: white;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: var(--transition);
-            font-weight: 500;
-        }
-
-        .page-btn:hover {
-            border-color: var(--primary);
-            color: var(--primary);
-        }
-
-        .page-btn.active {
-            background: var(--primary);
-            color: white;
-            border-color: var(--primary);
-        }
-
-        .page-btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
         }
 
         /* Footer */
@@ -563,7 +489,6 @@
 
         body.dark-mode .navbar,
         body.dark-mode .product-card,
-        body.dark-mode .filters,
         body.dark-mode .error-container,
         body.dark-mode .product-detail-container {
             background: #1e1e1e;
@@ -577,9 +502,7 @@
             color: #e0e0e0;
         }
 
-        body.dark-mode .search-bar input,
-        body.dark-mode .filter-group select,
-        body.dark-mode .filter-group input {
+        body.dark-mode .search-bar input {
             background: #2d2d2d;
             border-color: #444;
             color: #e0e0e0;
@@ -624,15 +547,6 @@
                 grid-template-columns: 1fr;
             }
 
-            .filters {
-                flex-direction: column;
-                align-items: stretch;
-            }
-
-            .filter-group select, .filter-group input {
-                width: 100%;
-            }
-
             .nav-actions {
                 flex-direction: column;
                 width: 100%;
@@ -665,17 +579,9 @@
                 <i class="fas fa-th-large"></i>
                 <span>Products</span>
             </a>
-            <a href="#/categories" id="nav-categories">
-                <i class="fas fa-tags"></i>
-                <span>Categories</span>
-            </a>
         </div>
         
         <div class="nav-actions">
-            <div class="search-bar">
-                <i class="fas fa-search"></i>
-                <input type="text" id="search-input" placeholder="Search products...">
-            </div>
             <button class="theme-toggle" id="theme-toggle">
                 <i class="fas fa-moon"></i>
             </button>
@@ -699,7 +605,6 @@
                 <div class="footer-links">
                     <a href="#/">Home</a>
                     <a href="#/products">All Products</a>
-                    <a href="#/categories">Categories</a>
                 </div>
             </div>
             <div class="footer-section">
@@ -715,195 +620,69 @@
     </footer>
 
     <script>
-        // API Configuration
+        // API Configuration - Same as bak.html
         const API_URL = 'https://fakestoreapi.com/products';
-        const CATEGORIES_API = 'https://fakestoreapi.com/products/categories';
-        
-        // Global State
-        const state = {
-            products: [],
-            filteredProducts: [],
-            categories: [],
-            currentPage: 1,
-            itemsPerPage: 8,
-            currentCategory: 'all',
-            sortBy: 'default',
-            searchQuery: '',
-            darkMode: localStorage.getItem('darkMode') === 'true'
-        };
 
-        // Initialize
-        document.addEventListener('DOMContentLoaded', () => {
-            // Set initial theme
-            if (state.darkMode) {
-                document.body.classList.add('dark-mode');
-                document.querySelector('#theme-toggle i').className = 'fas fa-sun';
-            }
-            
-            // Load categories
-            loadCategories();
-            
-            // Set up event listeners
-            setupEventListeners();
-            
-            // Initial routing
-            router();
-        });
-
-        // Event Listeners
-        function setupEventListeners() {
-            // Theme toggle
-            document.getElementById('theme-toggle').addEventListener('click', toggleTheme);
-            
-            // Search input
-            document.getElementById('search-input').addEventListener('input', function(e) {
-                state.searchQuery = e.target.value.toLowerCase();
-                if (window.location.hash === '#/products') {
-                    filterProducts();
-                    renderProducts();
-                }
-            });
-            
-            // Hash change routing
-            window.addEventListener('hashchange', router);
-        }
-
-        // Router
+        // Router - Simplified like bak.html
         function router() {
-            const hash = window.location.hash || '#/';
-            
-            // Update active nav link
-            document.querySelectorAll('.nav-links a').forEach(link => {
-                link.classList.remove('active');
-            });
-            
-            let appContent = '';
-            
+            const hash = location.hash || '#/';
+            $('.nav-links a').removeClass('active');
+
             if (hash === '#/') {
-                document.getElementById('nav-home').classList.add('active');
-                appContent = renderHome();
+                $('#nav-home').addClass('active');
+                renderHome();
             } else if (hash === '#/products') {
-                document.getElementById('nav-products').classList.add('active');
-                appContent = renderProductsPage();
-            } else if (hash === '#/categories') {
-                document.getElementById('nav-categories').classList.add('active');
-                appContent = renderCategories();
+                $('#nav-products').addClass('active');
+                renderProducts();
             } else if (hash.startsWith('#/product/')) {
                 const id = hash.split('/')[2];
-                appContent = renderProductDetail(id);
-            } else if (hash.startsWith('#/category/')) {
-                const category = decodeURIComponent(hash.split('/')[2]);
-                state.currentCategory = category;
-                appContent = renderProductsPage();
+                renderProductDetail(id);
             } else {
-                appContent = renderNotFound();
-            }
-            
-            document.getElementById('app').innerHTML = appContent;
-            
-            // Re-attach event listeners for dynamic content
-            if (hash === '#/products' || hash.startsWith('#/category/')) {
-                attachProductPageListeners();
+                $('#app').html('<h2 style="text-align:center;margin-top:50px;">404 Page Not Found</h2>');
             }
         }
 
-        // API Functions
-        async function fetchProducts() {
-            try {
-                showLoader();
-                let url = API_URL;
-                
-                if (state.currentCategory !== 'all') {
-                    url = `${API_URL}/category/${state.currentCategory}`;
-                }
-                
-                const response = await fetch(url);
-                if (!response.ok) throw new Error('Failed to fetch products');
-                
-                state.products = await response.json();
-                filterProducts();
-            } catch (error) {
-                showError('Failed to load products. Please try again later.');
-                console.error('API Error:', error);
-            }
+        $(window).on('hashchange', router);
+        $(window).on('load', router);
+
+        // UI Components - Simplified
+        function Loader() {
+            return `
+                <div class="loader">
+                    <div class="spinner"></div>
+                    <p>Loading products...</p>
+                </div>
+            `;
         }
 
-        async function loadCategories() {
-            try {
-                const response = await fetch(CATEGORIES_API);
-                state.categories = await response.json();
-            } catch (error) {
-                console.error('Failed to load categories:', error);
-            }
+        function ErrorMessage(msg) {
+            return `
+                <div class="error-container">
+                    <div class="error-icon">
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </div>
+                    <h2>Error</h2>
+                    <p>${msg}</p>
+                    <button class="btn btn-primary" onclick="location.reload()">
+                        <i class="fas fa-redo"></i>
+                        Try Again
+                    </button>
+                </div>
+            `;
         }
 
-        async function fetchProductById(id) {
-            try {
-                showLoader();
-                const response = await fetch(`${API_URL}/${id}`);
-                if (!response.ok) throw new Error('Product not found');
-                return await response.json();
-            } catch (error) {
-                showError('Failed to load product details.');
-                console.error('API Error:', error);
-                return null;
-            }
-        }
-
-        // Filter and Sort Functions
-        function filterProducts() {
-            let filtered = [...state.products];
-            
-            // Apply search filter
-            if (state.searchQuery) {
-                filtered = filtered.filter(product => 
-                    product.title.toLowerCase().includes(state.searchQuery) ||
-                    product.description.toLowerCase().includes(state.searchQuery) ||
-                    product.category.toLowerCase().includes(state.searchQuery)
-                );
-            }
-            
-            // Apply sorting
-            switch(state.sortBy) {
-                case 'price-low':
-                    filtered.sort((a, b) => a.price - b.price);
-                    break;
-                case 'price-high':
-                    filtered.sort((a, b) => b.price - a.price);
-                    break;
-                case 'name':
-                    filtered.sort((a, b) => a.title.localeCompare(b.title));
-                    break;
-                case 'rating':
-                    filtered.sort((a, b) => b.rating.rate - a.rating.rate);
-                    break;
-            }
-            
-            state.filteredProducts = filtered;
-            state.currentPage = 1;
-        }
-
-        // UI Components
         function ProductCard(product) {
             return `
-                <div class="product-card" data-id="${product.id}">
+                <div class="product-card">
                     <img src="${product.image}" alt="${product.title}" loading="lazy">
                     <div class="product-content">
                         <span class="product-category">${product.category}</span>
                         <h3 class="product-title">${product.title}</h3>
-                        <div class="product-rating">
-                            ${generateStars(product.rating.rate)}
-                            <span>(${product.rating.count})</span>
-                        </div>
                         <div class="product-price">$${product.price.toFixed(2)}</div>
                         <div class="card-actions">
                             <button class="card-btn card-btn-primary" onclick="location.hash='#/product/${product.id}'">
                                 <i class="fas fa-eye"></i>
                                 View Details
-                            </button>
-                            <button class="card-btn card-btn-outline" onclick="addToFavorites(${product.id})">
-                                <i class="far fa-heart"></i>
-                                Favorite
                             </button>
                         </div>
                     </div>
@@ -911,38 +690,16 @@
             `;
         }
 
-        function generateStars(rating) {
-            let stars = '';
-            const fullStars = Math.floor(rating);
-            const hasHalfStar = rating % 1 >= 0.5;
-            
-            for (let i = 1; i <= 5; i++) {
-                if (i <= fullStars) {
-                    stars += '<i class="fas fa-star"></i>';
-                } else if (i === fullStars + 1 && hasHalfStar) {
-                    stars += '<i class="fas fa-star-half-alt"></i>';
-                } else {
-                    stars += '<i class="far fa-star"></i>';
-                }
-            }
-            
-            return stars;
-        }
-
-        // Page Renderers
+        // Page Renderers - Simplified like bak.html
         function renderHome() {
-            return `
+            $('#app').html(`
                 <div class="hero">
                     <h1>Discover Amazing Products</h1>
-                    <p>Explore our curated collection of products from the FakeStore API. Find exactly what you're looking for with our advanced filters and search.</p>
+                    <p>Explore our curated collection of products from the FakeStore API. Find exactly what you're looking for.</p>
                     <div style="display: flex; gap: 1rem; justify-content: center; margin-top: 2rem;">
                         <a href="#/products" class="btn btn-primary">
                             <i class="fas fa-shopping-bag"></i>
                             Browse Products
-                        </a>
-                        <a href="#/categories" class="btn btn-secondary">
-                            <i class="fas fa-tags"></i>
-                            View Categories
                         </a>
                     </div>
                 </div>
@@ -970,389 +727,110 @@
                         </div>
                     </div>
                 </div>
-            `;
+            `);
         }
 
-        async function renderProductsPage() {
-            await fetchProducts();
+        function renderProducts() {
+            $('#app').html(Loader());
             
-            if (state.filteredProducts.length === 0) {
-                return `
-                    <div class="error-container">
-                        <div class="error-icon">
-                            <i class="fas fa-exclamation-triangle"></i>
-                        </div>
-                        <h2>No Products Found</h2>
-                        <p>Try adjusting your search or filter criteria.</p>
-                        <button class="btn btn-primary" onclick="location.hash='#/products'">
-                            View All Products
-                        </button>
-                    </div>
-                `;
-            }
-            
-            // Calculate pagination
-            const startIndex = (state.currentPage - 1) * state.itemsPerPage;
-            const endIndex = startIndex + state.itemsPerPage;
-            const currentProducts = state.filteredProducts.slice(startIndex, endIndex);
-            const totalPages = Math.ceil(state.filteredProducts.length / state.itemsPerPage);
-            
-            return `
-                <h1 class="section-title">
-                    <i class="fas fa-boxes"></i>
-                    ${state.currentCategory === 'all' ? 'All Products' : state.currentCategory}
-                    <span style="font-size: 1rem; color: var(--gray); margin-left: 1rem;">
-                        (${state.filteredProducts.length} products)
-                    </span>
-                </h1>
-                
-                <div class="filters">
-                    <div class="filter-group">
-                        <label for="category-filter"><i class="fas fa-filter"></i> Category</label>
-                        <select id="category-filter" class="category-filter">
-                            <option value="all" ${state.currentCategory === 'all' ? 'selected' : ''}>All Categories</option>
-                            ${state.categories.map(cat => `
-                                <option value="${cat}" ${state.currentCategory === cat ? 'selected' : ''}>
-                                    ${cat.charAt(0).toUpperCase() + cat.slice(1)}
-                                </option>
-                            `).join('')}
-                        </select>
-                    </div>
+            $.getJSON(API_URL)
+                .done(function (products) {
+                    if (products.length === 0) {
+                        $('#app').html(ErrorMessage('No products found!'));
+                        return;
+                    }
                     
-                    <div class="filter-group">
-                        <label for="sort-filter"><i class="fas fa-sort"></i> Sort By</label>
-                        <select id="sort-filter" class="sort-filter">
-                            <option value="default" ${state.sortBy === 'default' ? 'selected' : ''}>Default</option>
-                            <option value="price-low" ${state.sortBy === 'price-low' ? 'selected' : ''}>Price: Low to High</option>
-                            <option value="price-high" ${state.sortBy === 'price-high' ? 'selected' : ''}>Price: High to Low</option>
-                            <option value="name" ${state.sortBy === 'name' ? 'selected' : ''}>Name A-Z</option>
-                            <option value="rating" ${state.sortBy === 'rating' ? 'selected' : ''}>Highest Rated</option>
-                        </select>
-                    </div>
+                    let html = `
+                        <h1 class="section-title">
+                            <i class="fas fa-boxes"></i>
+                            All Products
+                            <span style="font-size: 1rem; color: var(--gray); margin-left: 1rem;">
+                                (${products.length} products)
+                            </span>
+                        </h1>
+                        <div class="products-grid">
+                    `;
                     
-                    <div class="filter-group">
-                        <label for="items-per-page"><i class="fas fa-list-ol"></i> Items Per Page</label>
-                        <select id="items-per-page" class="items-per-page">
-                            <option value="8" ${state.itemsPerPage === 8 ? 'selected' : ''}>8</option>
-                            <option value="12" ${state.itemsPerPage === 12 ? 'selected' : ''}>12</option>
-                            <option value="16" ${state.itemsPerPage === 16 ? 'selected' : ''}>16</option>
-                            <option value="20" ${state.itemsPerPage === 20 ? 'selected' : ''}>20</option>
-                        </select>
-                    </div>
-                </div>
-                
-                <div class="products-grid">
-                    ${currentProducts.map(product => ProductCard(product)).join('')}
-                </div>
-                
-                ${renderPagination(totalPages)}
-            `;
+                    products.forEach(product => {
+                        html += ProductCard(product);
+                    });
+                    
+                    html += '</div>';
+                    $('#app').html(html);
+                })
+                .fail(function () {
+                    $('#app').html(ErrorMessage('Error loading products.'));
+                });
         }
 
-        function renderPagination(totalPages) {
-            if (totalPages <= 1) return '';
+        function renderProductDetail(id) {
+            $('#app').html(Loader());
             
-            let pages = '';
-            for (let i = 1; i <= totalPages; i++) {
-                pages += `
-                    <button class="page-btn ${i === state.currentPage ? 'active' : ''}" 
-                            onclick="goToPage(${i})">
-                        ${i}
-                    </button>
-                `;
-            }
-            
-            return `
-                <div class="pagination">
-                    <button class="page-btn" onclick="goToPage(${state.currentPage - 1})" 
-                            ${state.currentPage === 1 ? 'disabled' : ''}>
-                        <i class="fas fa-chevron-left"></i> Previous
-                    </button>
-                    ${pages}
-                    <button class="page-btn" onclick="goToPage(${state.currentPage + 1})" 
-                            ${state.currentPage === totalPages ? 'disabled' : ''}>
-                        Next <i class="fas fa-chevron-right"></i>
-                    </button>
-                </div>
-            `;
-        }
-
-        async function renderProductDetail(id) {
-            const product = await fetchProductById(id);
-            
-            if (!product) {
-                return `
-                    <div class="error-container">
-                        <div class="error-icon">
-                            <i class="fas fa-exclamation-circle"></i>
-                        </div>
-                        <h2>Product Not Found</h2>
-                        <p>The requested product could not be loaded.</p>
-                        <button class="btn btn-primary" onclick="location.hash='#/products'">
-                            Back to Products
-                        </button>
-                    </div>
-                `;
-            }
-            
-            return `
-                <div class="product-detail-container">
-                    <div class="product-detail">
-                        <div class="product-detail-image">
-                            <img src="${product.image}" alt="${product.title}">
-                        </div>
-                        <div class="product-detail-info">
-                            <span class="product-category">${product.category}</span>
-                            <h1>${product.title}</h1>
-                            <div class="product-rating">
-                                ${generateStars(product.rating.rate)}
-                                <span>${product.rating.rate} (${product.rating.count} reviews)</span>
-                            </div>
-                            <div class="product-detail-price">$${product.price.toFixed(2)}</div>
-                            
-                            <div class="product-meta">
-                                <div class="meta-item">
-                                    <span class="meta-label">Category</span>
-                                    <span class="meta-value">${product.category}</span>
+            $.getJSON(`${API_URL}/${id}`)
+                .done(function (product) {
+                    $('#app').html(`
+                        <div class="product-detail-container">
+                            <div class="product-detail">
+                                <div class="product-detail-image">
+                                    <img src="${product.image}" alt="${product.title}">
                                 </div>
-                                <div class="meta-item">
-                                    <span class="meta-label">In Stock</span>
-                                    <span class="meta-value">Available</span>
-                                </div>
-                                <div class="meta-item">
-                                    <span class="meta-label">SKU</span>
-                                    <span class="meta-value">PROD-${product.id.toString().padStart(4, '0')}</span>
+                                <div class="product-detail-info">
+                                    <span class="product-category">${product.category}</span>
+                                    <h1>${product.title}</h1>
+                                    <div class="product-detail-price">$${product.price.toFixed(2)}</div>
+                                    
+                                    <div class="product-meta">
+                                        <div class="meta-item">
+                                            <span class="meta-label">Category</span>
+                                            <span class="meta-value">${product.category}</span>
+                                        </div>
+                                        <div class="meta-item">
+                                            <span class="meta-label">Rating</span>
+                                            <span class="meta-value">${product.rating.rate} (${product.rating.count} reviews)</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <p class="product-description">${product.description}</p>
+                                    
+                                    <div style="display: flex; gap: 1rem; margin-top: 2rem;">
+                                        <button class="btn btn-primary" onclick="location.hash='#/products'">
+                                            <i class="fas fa-arrow-left"></i>
+                                            Back to Products
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
-                            
-                            <p class="product-description">${product.description}</p>
-                            
-                            <div style="display: flex; gap: 1rem; margin-top: 2rem;">
-                                <button class="btn btn-primary" onclick="addToCart(${product.id})">
-                                    <i class="fas fa-cart-plus"></i>
-                                    Add to Cart
-                                </button>
-                                <button class="btn" onclick="location.hash='#/products'">
-                                    <i class="fas fa-arrow-left"></i>
-                                    Back to Products
-                                </button>
-                                <button class="btn" onclick="addToFavorites(${product.id})">
-                                    <i class="far fa-heart"></i>
-                                    Favorite
-                                </button>
-                            </div>
                         </div>
-                    </div>
-                </div>
-            `;
+                    `);
+                })
+                .fail(function () {
+                    $('#app').html(ErrorMessage('Error loading product details.'));
+                });
         }
 
-        function renderCategories() {
-            return `
-                <h1 class="section-title">
-                    <i class="fas fa-tags"></i>
-                    Product Categories
-                </h1>
+        // Theme Toggle (keeping this functionality)
+        $(document).ready(function() {
+            // Set initial theme
+            const darkMode = localStorage.getItem('darkMode') === 'true';
+            if (darkMode) {
+                document.body.classList.add('dark-mode');
+                $('#theme-toggle i').removeClass('fa-moon').addClass('fa-sun');
+            }
+            
+            // Theme toggle handler
+            $('#theme-toggle').click(function() {
+                const isDark = document.body.classList.toggle('dark-mode');
+                const icon = $('#theme-toggle i');
                 
-                <div class="products-grid" style="margin-top: 2rem;">
-                    ${state.categories.map(category => `
-                        <div class="product-card" onclick="location.hash='#/category/${category}'" style="cursor: pointer;">
-                            <div style="padding: 3rem 2rem; background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);">
-                                <i class="fas fa-box" style="font-size: 3rem; color: white;"></i>
-                            </div>
-                            <div class="product-content" style="text-align: center;">
-                                <h3 class="product-title">${category.charAt(0).toUpperCase() + category.slice(1)}</h3>
-                                <button class="card-btn card-btn-primary" style="width: 100%;">
-                                    Browse Products
-                                    <i class="fas fa-arrow-right"></i>
-                                </button>
-                            </div>
-                        </div>
-                    `).join('')}
-                </div>
-            `;
-        }
-
-        function renderNotFound() {
-            return `
-                <div class="error-container" style="margin-top: 4rem;">
-                    <div class="error-icon">
-                        <i class="fas fa-map-signs"></i>
-                    </div>
-                    <h1>404 - Page Not Found</h1>
-                    <p>The page you're looking for doesn't exist or has been moved.</p>
-                    <button class="btn btn-primary" onclick="location.hash='#/'">
-                        <i class="fas fa-home"></i>
-                        Go Home
-                    </button>
-                </div>
-            `;
-        }
-
-        // Utility Functions
-        function showLoader() {
-            document.getElementById('app').innerHTML = `
-                <div class="loader">
-                    <div class="spinner"></div>
-                    <p>Loading products...</p>
-                </div>
-            `;
-        }
-
-        function showError(message) {
-            document.getElementById('app').innerHTML = `
-                <div class="error-container">
-                    <div class="error-icon">
-                        <i class="fas fa-exclamation-triangle"></i>
-                    </div>
-                    <h2>Error</h2>
-                    <p>${message}</p>
-                    <button class="btn btn-primary" onclick="location.reload()">
-                        <i class="fas fa-redo"></i>
-                        Try Again
-                    </button>
-                </div>
-            `;
-        }
-
-        function attachProductPageListeners() {
-            // Category filter
-            const categoryFilter = document.querySelector('.category-filter');
-            if (categoryFilter) {
-                categoryFilter.addEventListener('change', function(e) {
-                    state.currentCategory = e.target.value;
-                    if (state.currentCategory === 'all') {
-                        location.hash = '#/products';
-                    } else {
-                        location.hash = `#/category/${state.currentCategory}`;
-                    }
-                });
-            }
-            
-            // Sort filter
-            const sortFilter = document.querySelector('.sort-filter');
-            if (sortFilter) {
-                sortFilter.addEventListener('change', function(e) {
-                    state.sortBy = e.target.value;
-                    filterProducts();
-                    document.getElementById('app').innerHTML = renderProductsPage();
-                    attachProductPageListeners();
-                });
-            }
-            
-            // Items per page
-            const itemsPerPage = document.querySelector('.items-per-page');
-            if (itemsPerPage) {
-                itemsPerPage.addEventListener('change', function(e) {
-                    state.itemsPerPage = parseInt(e.target.value);
-                    document.getElementById('app').innerHTML = renderProductsPage();
-                    attachProductPageListeners();
-                });
-            }
-        }
-
-        // Pagination Function
-        function goToPage(page) {
-            const totalPages = Math.ceil(state.filteredProducts.length / state.itemsPerPage);
-            if (page >= 1 && page <= totalPages) {
-                state.currentPage = page;
-                document.getElementById('app').innerHTML = renderProductsPage();
-                attachProductPageListeners();
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            }
-        }
-
-        // Theme Toggle
-        function toggleTheme() {
-            state.darkMode = !state.darkMode;
-            document.body.classList.toggle('dark-mode', state.darkMode);
-            
-            const icon = document.querySelector('#theme-toggle i');
-            icon.className = state.darkMode ? 'fas fa-sun' : 'fas fa-moon';
-            
-            localStorage.setItem('darkMode', state.darkMode);
-        }
-
-        // Additional Features
-        function addToFavorites(productId) {
-            let favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
-            if (!favorites.includes(productId)) {
-                favorites.push(productId);
-                localStorage.setItem('favorites', JSON.stringify(favorites));
+                if (isDark) {
+                    icon.removeClass('fa-moon').addClass('fa-sun');
+                } else {
+                    icon.removeClass('fa-sun').addClass('fa-moon');
+                }
                 
-                // Show notification
-                showNotification('Product added to favorites!');
-            } else {
-                showNotification('Product is already in favorites!');
-            }
-        }
-
-        function addToCart(productId) {
-            let cart = JSON.parse(localStorage.getItem('cart') || '[]');
-            const product = state.products.find(p => p.id === productId);
-            
-            if (product) {
-                cart.push({
-                    id: product.id,
-                    title: product.title,
-                    price: product.price,
-                    image: product.image,
-                    quantity: 1
-                });
-                localStorage.setItem('cart', JSON.stringify(cart));
-                showNotification('Product added to cart!');
-            }
-        }
-
-        function showNotification(message) {
-            // Create notification element
-            const notification = document.createElement('div');
-            notification.style.cssText = `
-                position: fixed;
-                top: 20px;
-                right: 20px;
-                background: var(--primary);
-                color: white;
-                padding: 1rem 1.5rem;
-                border-radius: var(--border-radius);
-                box-shadow: var(--card-shadow);
-                z-index: 1000;
-                animation: slideIn 0.3s ease;
-                display: flex;
-                align-items: center;
-                gap: 10px;
-            `;
-            
-            notification.innerHTML = `
-                <i class="fas fa-check-circle"></i>
-                <span>${message}</span>
-            `;
-            
-            document.body.appendChild(notification);
-            
-            // Remove after 3 seconds
-            setTimeout(() => {
-                notification.style.animation = 'slideOut 0.3s ease';
-                setTimeout(() => notification.remove(), 300);
-            }, 3000);
-            
-            // Add animation keyframes
-            if (!document.querySelector('#notification-styles')) {
-                const style = document.createElement('style');
-                style.id = 'notification-styles';
-                style.textContent = `
-                    @keyframes slideIn {
-                        from { transform: translateX(100%); opacity: 0; }
-                        to { transform: translateX(0); opacity: 1; }
-                    }
-                    @keyframes slideOut {
-                        from { transform: translateX(0); opacity: 1; }
-                        to { transform: translateX(100%); opacity: 0; }
-                    }
-                `;
-                document.head.appendChild(style);
-            }
-        }
+                localStorage.setItem('darkMode', isDark);
+            });
+        });
     </script>
 </body>
 </html>
