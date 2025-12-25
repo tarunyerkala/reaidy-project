@@ -714,7 +714,7 @@
             }
         }
 
-        
+
 
         @media (max-width: 480px) {
             .products-grid {
@@ -806,62 +806,152 @@
                 </button>
             </div>
             <div class="modal-body">
+                <!-- Project Overview -->
                 <div class="modal-section">
                     <h3><i class="fas fa-info-circle"></i> Project Overview</h3>
-                    <p>ProductHub is a modern web application that shows products in a simple and clean way. It is a
-                        single page application, which means the page does not reload when we move between sections. The
-                        product data is taken from the FakeStore API. The application works smoothly on mobile, tablet,
-                        and desktop devices.</p>
+                    <p><strong>ProductHub</strong> is a modern Single Page Application (SPA) that provides a clean,
+                        intuitive interface for browsing and viewing products. Built with a focus on user experience and
+                        performance, it offers seamless navigation without page reloads.</p>
+
+                    <div style="background: var(--light-gray); padding: 1rem; border-radius: 8px; margin-top: 1rem;">
+                        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem;">
+                            <div>
+                                <div style="font-weight: bold; color: var(--primary); margin-bottom: 0.3rem;">Type</div>
+                                <div>Single Page Application</div>
+                            </div>
+                            <div>
+                                <div style="font-weight: bold; color: var(--primary); margin-bottom: 0.3rem;">Focus
+                                </div>
+                                <div>Product Display & User Experience</div>
+                            </div>
+                            <div>
+                                <div style="font-weight: bold; color: var(--primary); margin-bottom: 0.3rem;">Data
+                                    Source</div>
+                                <div>FakeStore API</div>
+                            </div>
+                            <div>
+                                <div style="font-weight: bold; color: var(--primary); margin-bottom: 0.3rem;">Status
+                                </div>
+                                <div>Live & Functional</div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
+                <!-- Core Features -->
                 <div class="modal-section">
-                    <h3><i class="fas fa-star"></i> Core Features</h3>
-                    <ul>
-                        <li>The application works on a single page without refreshing</li>
-                        <li>Product data is fetched from an external API in real time</li>
-                        <li>The layout adjusts automatically for different screen sizes</li>
-                        <li>Users can switch between dark mode and light mode</li>
-                        <li>Choice is saved between sessions</li>
-                    </ul>
+                    <h3><i class="fas fa-star"></i> What This Website Does</h3>
+                    <div
+                        style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-top: 1rem;">
+                        <div style="border-left: 4px solid var(--primary); padding-left: 1rem;">
+                            <h4 style="color: var(--primary); margin-bottom: 0.5rem;">Dynamic Product Display</h4>
+                            <p style="font-size: 0.95rem;">Fetches and displays products in real-time with images,
+                                prices, and descriptions in an organized card layout.</p>
+                        </div>
+                        <div style="border-left: 4px solid var(--secondary); padding-left: 1rem;">
+                            <h4 style="color: var(--secondary); margin-bottom: 0.5rem;">Seamless Navigation</h4>
+                            <p style="font-size: 0.95rem;">Uses hash-based routing for smooth transitions between home,
+                                product listings, and detailed views.</p>
+                        </div>
+                        <div style="border-left: 4px solid var(--success); padding-left: 1rem;">
+                            <h4 style="color: var(--success); margin-bottom: 0.5rem;">Responsive Design</h4>
+                            <p style="font-size: 0.95rem;">Optimized for all devices with adaptive layouts that work
+                                perfectly on mobile, tablet, and desktop.</p>
+                        </div>
+                        <div style="border-left: 4px solid #f72585; padding-left: 1rem;">
+                            <h4 style="color: #f72585; margin-bottom: 0.5rem;">Dark/Light Theme</h4>
+                            <p style="font-size: 0.95rem;">Customizable interface with theme switching that remembers
+                                user preference across sessions.</p>
+                        </div>
+                    </div>
                 </div>
 
+                <!-- Website Sections -->
                 <div class="modal-section">
-                    <h3><i class="fas fa-sitemap"></i> Pages</h3>
-                    <ul>
-                        <li><strong>Home Page:</strong> Shows a short introduction about the application</li>
-                        <li><strong>Products Page:</strong> Displays all products with images, names, and prices</li>
-                        <li><strong>Product Details Page:</strong> Shows complete information about a selected product
-                        </li>
-                    </ul>
+                    <h3><i class="fas fa-sitemap"></i> Website Sections</h3>
+                    <div
+                        style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-top: 1rem;">
+                        <div
+                            style="text-align: center; padding: 1.5rem; background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%); color: white; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                            <i class="fas fa-home fa-2x" style="margin-bottom: 0.5rem;"></i>
+                            <div style="font-weight: bold; font-size: 1.1rem;">Home</div>
+                            <div style="font-size: 0.9rem; opacity: 0.9; margin-top: 0.5rem;">Welcome screen with
+                                introduction and key features</div>
+                        </div>
+                        <div
+                            style="text-align: center; padding: 1.5rem; background: linear-gradient(135deg, #4cc9f0 0%, #4361ee 100%); color: white; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                            <i class="fas fa-boxes fa-2x" style="margin-bottom: 0.5rem;"></i>
+                            <div style="font-weight: bold; font-size: 1.1rem;">Products</div>
+                            <div style="font-size: 0.9rem; opacity: 0.9; margin-top: 0.5rem;">Browse all available
+                                products in grid view</div>
+                        </div>
+                        <div
+                            style="text-align: center; padding: 1.5rem; background: linear-gradient(135deg, var(--secondary) 0%, #f72585 100%); color: white; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                            <i class="fas fa-search fa-2x" style="margin-bottom: 0.5rem;"></i>
+                            <div style="font-weight: bold; font-size: 1.1rem;">Product Details</div>
+                            <div style="font-size: 0.9rem; opacity: 0.9; margin-top: 0.5rem;">Detailed view with
+                                complete product information</div>
+                        </div>
+                    </div>
                 </div>
 
+                <!-- User Experience -->
                 <div class="modal-section">
-                    <h3><i class="fas fa-paint-brush"></i> User Interface</h3>
-                    <ul>
-                        <li>Uses cards to display product information clearly</li>
-                        <li>Shows a loading indicator while data is being fetched</li>
-                        <li>Displays simple error messages if data fails to load</li>
-                        <li>Smooth animations improve user experience</li>
-                        <li>Clean design with consistent colors and fonts</li>
-                    </ul>
+                    <h3><i class="fas fa-user-check"></i> User Experience Highlights</h3>
+                    <div style="background: var(--light-gray); padding: 1.5rem; border-radius: 8px; margin-top: 1rem;">
+                        <ul style="columns: 2; -webkit-columns: 2; -moz-columns: 2;">
+                            <li><strong>Instant Loading:</strong> Products appear as they load</li>
+                            <li><strong>Visual Feedback:</strong> Loading spinners and error states</li>
+                            <li><strong>Smooth Animations:</strong> Hover effects and transitions</li>
+                            <li><strong>Clean Interface:</strong> Minimal design, maximum clarity</li>
+                            <li><strong>Intuitive Navigation:</strong> Easy to browse and explore</li>
+                            <li><strong>Theme Personalization:</strong> Choose your preferred look</li>
+                            <li><strong>Mobile Optimized:</strong> Touch-friendly on all devices</li>
+                            <li><strong>Fast Performance:</strong> Quick API responses and rendering</li>
+                        </ul>
+                    </div>
                 </div>
 
+                <!-- Technical Highlights -->
                 <div class="modal-section">
-                    <h3><i class="fas fa-cogs"></i> Technologies Used</h3>
-                    <ul>
-                        <li><strong>Frontend:</strong> HTML5, CSS3, JavaScript, jQuery, Font Awesome</li>
-                        <li><strong>API:</strong> FakeStore API for product data</li>
-                        <li><strong>Responsive Design:</strong> Mobile, tablet, and desktop layouts</li>
-                    </ul>
+                    <h3><i class="fas fa-cogs"></i> Technical Highlights</h3>
+                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-top: 1rem;">
+                        <div style="padding: 1rem; border: 1px solid var(--light-gray); border-radius: 8px;">
+                            <h4 style="color: var(--primary); margin-bottom: 0.5rem;">Frontend Architecture</h4>
+                            <ul>
+                                <li>Vanilla JavaScript SPA</li>
+                                <li>jQuery for AJAX calls</li>
+                                <li>Hash-based routing</li>
+                                <li>Modular component design</li>
+                            </ul>
+                        </div>
+                        <div style="padding: 1rem; border: 1px solid var(--light-gray); border-radius: 8px;">
+                            <h4 style="color: var(--primary); margin-bottom: 0.5rem;">Performance Features</h4>
+                            <ul>
+                                <li>Optimized image loading</li>
+                                <li>Efficient DOM updates</li>
+                                <li>LocalStorage for theme</li>
+                                <li>Minimal dependencies</li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
 
+                <!-- Purpose & Value -->
                 <div class="modal-section">
-                    <h3><i class="fas fa-rocket"></i> How to Run</h3>
-                    <ul>
-                        <li><strong>Method 1:</strong> Open index.html directly in browser</li>
-                        <li><strong>Method 2:</strong> Host on a web server</li>
-                        <li><strong>Method 3:</strong> Open in code editor for development</li>
-                    </ul>
+                    <h3><i class="fas fa-bullseye"></i> Purpose & Value</h3>
+                    <div
+                        style="background: linear-gradient(135deg, rgba(67, 97, 238, 0.1) 0%, rgba(114, 9, 183, 0.1) 100%); padding: 1.5rem; border-radius: 8px; margin-top: 1rem;">
+                        <p>This website demonstrates modern web development practices by creating a functional,
+                            attractive product catalog that:</p>
+                        <ul style="margin-top: 0.5rem;">
+                            <li><strong>Shows real API integration</strong> with dynamic content loading</li>
+                            <li><strong>Provides excellent user experience</strong> with smooth interactions</li>
+                            <li><strong>Works across all devices</strong> with responsive design</li>
+                            <li><strong>Offers visual appeal</strong> with modern UI/UX principles</li>
+                            <li><strong>Serves as a template</strong> for similar product display applications</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
             <div class="modal-footer">
