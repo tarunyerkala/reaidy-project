@@ -331,17 +331,34 @@
             margin-bottom: 3rem;
             box-shadow: var(--card-shadow);
 
-            /* 3D shopping icons background */
+            /* 3D Shopping icons background */
             background:
-                linear-gradient(rgba(67, 97, 238, 0.85),
-                    rgba(114, 9, 183, 0.85)),
-                url("https://assets.iconscout.com/123456/discount-tag-3d-icon.png") no-repeat center/cover;
+                linear-gradient(rgba(0, 0, 0, 0.50),
+                    rgba(0, 0, 0, 0.50)),
+                url("https://iconscout.com/3d-icon/woman-doing-online-shopping-3d-icon_5299734");
+
+            background-position: center;
+            background-size: cover;
+            background-repeat: no-repeat;
         }
 
-        .hero::before {
-            content: "🛍️ 💸 🛒 🎁 🏷️";
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            font-weight: 800;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            opacity: 0.9;
+        }
+
+        .hero::after {
+            content: "🛒 💸 🛍️ 🎁 🏷️";
             position: absolute;
-            top: 10%;
+            bottom: 10%;
             left: 50%;
             transform: translateX(-50%);
             font-size: 2.5rem;
@@ -362,7 +379,6 @@
                 transform: translate(-50%, 0);
             }
         }
-
 
         .btn {
             display: inline-flex;
