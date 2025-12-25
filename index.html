@@ -323,27 +323,34 @@
 
         /* Hero Section */
         .hero {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            position: relative;
             border-radius: var(--border-radius);
             padding: 4rem 2rem;
             text-align: center;
             color: white;
             margin-bottom: 3rem;
             box-shadow: var(--card-shadow);
+
+            /* Background image with overlay */
+            background:
+                linear-gradient(rgba(67, 97, 238, 0.85),
+                    rgba(114, 9, 183, 0.85)),
+                url("https://images.unsplash.com/photo-1607082349566-187342175e2f");
+
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
         }
 
-        .hero h1 {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            font-weight: 800;
+        .hero::after {
+            content: "💸 🛒 🎁 🔥";
+            position: absolute;
+            bottom: 10%;
+            right: 5%;
+            font-size: 2.5rem;
+            opacity: 0.25;
         }
 
-        .hero p {
-            font-size: 1.2rem;
-            max-width: 700px;
-            margin: 0 auto 2rem;
-            opacity: 0.9;
-        }
 
         .btn {
             display: inline-flex;
@@ -755,7 +762,7 @@
         </div>
 
         <div class="nav-actions">
-                <i class="fas fa-info-circle" id="info-btn" title="Project Overview"></i>
+            <i class="fas fa-info-circle" id="info-btn" title="Project Overview"></i>
             <button class="theme-toggle" id="theme-toggle">
                 <i class="fas fa-moon"></i>
             </button>
@@ -942,15 +949,16 @@
         function renderHome() {
             $('#app').html(`
                 <div class="hero">
-                    <h1>Discover Amazing Products</h1>
-                    <p>Explore our curated collection of products from the FakeStore API. Find exactly what you're looking for.</p>
-                    <div style="display: flex; gap: 1rem; justify-content: center; margin-top: 2rem;">
-                        <a href="#/products" class="btn btn-primary">
-                            <i class="fas fa-shopping-bag"></i>
-                            Browse Products
-                        </a>
-                    </div>
-                </div>
+    <h1>Discover Amazing Products</h1>
+    <p>Explore our curated collection of products from the FakeStore API. Find exactly what you're looking for.</p>
+    <div style="display: flex; gap: 1rem; justify-content: center; margin-top: 2rem;">
+        <a href="#/products" class="btn btn-primary">
+            <i class="fas fa-shopping-bag"></i>
+            Browse Products
+        </a>
+    </div>
+</div>
+
                 
                 <div style="margin-top: 4rem;">
                     <h2 class="section-title">
