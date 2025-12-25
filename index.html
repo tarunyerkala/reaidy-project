@@ -323,23 +323,13 @@
 
         /* Hero Section */
         .hero {
-            position: relative;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
             border-radius: var(--border-radius);
-            padding: 4rem 2rem;
+            padding: 1rem 0rem;
             text-align: center;
             color: white;
             margin-bottom: 3rem;
             box-shadow: var(--card-shadow);
-
-            /* 3D Shopping icons background */
-            background:
-                linear-gradient(rgba(0, 0, 0, 0.50),
-                    rgba(0, 0, 0, 0.50)),
-                url("https://iconscout.com/3d-icon/woman-doing-online-shopping-3d-icon_5299734");
-
-            background-position: center;
-            background-size: cover;
-            background-repeat: no-repeat;
         }
 
         .hero h1 {
@@ -353,31 +343,6 @@
             max-width: 700px;
             margin: 0 auto 2rem;
             opacity: 0.9;
-        }
-
-        .hero::after {
-            content: "🛒 💸 🛍️ 🎁 🏷️";
-            position: absolute;
-            bottom: 10%;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 2.5rem;
-            opacity: 0.15;
-            animation: float 6s infinite ease-in-out;
-        }
-
-        @keyframes float {
-            0% {
-                transform: translate(-50%, 0);
-            }
-
-            50% {
-                transform: translate(-50%, -10px);
-            }
-
-            100% {
-                transform: translate(-50%, 0);
-            }
         }
 
         .btn {
@@ -790,7 +755,7 @@
         </div>
 
         <div class="nav-actions">
-            <i class="fas fa-info-circle" id="info-btn" title="Project Overview"></i>
+                <i class="fas fa-info-circle" id="info-btn" title="Project Overview"></i>
             <button class="theme-toggle" id="theme-toggle">
                 <i class="fas fa-moon"></i>
             </button>
@@ -977,16 +942,15 @@
         function renderHome() {
             $('#app').html(`
                 <div class="hero">
-    <h1>Discover Amazing Products</h1>
-    <p>Explore our curated collection of products from the FakeStore API. Find exactly what you're looking for.</p>
-    <div style="display: flex; gap: 1rem; justify-content: center; margin-top: 2rem;">
-        <a href="#/products" class="btn btn-primary">
-            <i class="fas fa-shopping-bag"></i>
-            Browse Products
-        </a>
-    </div>
-</div>
-
+                    <h1>Discover Amazing Products</h1>
+                    <p>Explore our curated collection of products from the FakeStore API. Find exactly what you're looking for.</p>
+                    <div style="display: flex; gap: 1rem; justify-content: center; margin-top: 2rem;">
+                        <a href="#/products" class="btn btn-primary">
+                            <i class="fas fa-shopping-bag"></i>
+                            Browse Products
+                        </a>
+                    </div>
+                </div>
                 
                 <div style="margin-top: 4rem;">
                     <h2 class="section-title">
