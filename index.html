@@ -8,6 +8,178 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <style>
+        /* Info Modal */
+        .info-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        .modal-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 90%;
+            max-width: 800px;
+            max-height: 80vh;
+            background: white;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            animation: slideUp 0.3s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translate(-50%, -40%);
+                opacity: 0;
+            }
+
+            to {
+                transform: translate(-50%, -50%);
+                opacity: 1;
+            }
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 1.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h2 {
+            font-size: 1.5rem;
+            margin: 0;
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 50%;
+            transition: var(--transition);
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .close-modal:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .modal-body {
+            padding: 2rem;
+            overflow-y: auto;
+            max-height: 60vh;
+        }
+
+        .modal-section {
+            margin-bottom: 2rem;
+        }
+
+        .modal-section h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .modal-section h3 i {
+            color: var(--secondary);
+        }
+
+        .modal-section ul {
+            list-style: none;
+            padding-left: 1.5rem;
+        }
+
+        .modal-section li {
+            margin-bottom: 0.5rem;
+            position: relative;
+        }
+
+        .modal-section li:before {
+            content: "•";
+            color: var(--primary);
+            font-weight: bold;
+            position: absolute;
+            left: -1rem;
+        }
+
+        .modal-footer {
+            padding: 1rem 2rem;
+            background: var(--light-gray);
+            text-align: center;
+            border-top: 1px solid #ddd;
+        }
+
+        .modal-footer p {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        /* Dark mode modal styles */
+        body.dark-mode .modal-content {
+            background: #1e1e1e;
+            color: #e0e0e0;
+        }
+
+        body.dark-mode .modal-body {
+            color: #e0e0e0;
+        }
+
+        body.dark-mode .modal-section h3 {
+            color: var(--success);
+        }
+
+        body.dark-mode .modal-footer {
+            background: #2d2d2d;
+            border-top: 1px solid #444;
+        }
+
+        /* Responsive modal */
+        @media (max-width: 768px) {
+            .modal-content {
+                width: 95%;
+                max-height: 90vh;
+            }
+
+            .modal-body {
+                padding: 1.5rem;
+            }
+
+            .modal-header {
+                padding: 1rem 1.5rem;
+            }
+        }
+
         /* Reset and Base Styles */
         * {
             margin: 0;
@@ -583,7 +755,9 @@
         </div>
 
         <div class="nav-actions">
-                <i class="fas fa-info-circle" id="info-icon"></i>
+            <button class="info-btn" id="info-btn" title="Project Overview">
+                <i class="fas fa-info-circle"></i>
+            </button>
             <button class="theme-toggle" id="theme-toggle">
                 <i class="fas fa-moon"></i>
             </button>
@@ -621,6 +795,79 @@
             </div>
         </div>
     </footer>
+    <!-- Info Modal -->
+    <div id="infoModal" class="info-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>ProductHub – Project Overview</h2>
+                <button class="close-modal" id="closeModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="modal-section">
+                    <h3><i class="fas fa-info-circle"></i> Project Overview</h3>
+                    <p>ProductHub is a modern web application that shows products in a simple and clean way. It is a
+                        single page application, which means the page does not reload when we move between sections. The
+                        product data is taken from the FakeStore API. The application works smoothly on mobile, tablet,
+                        and desktop devices.</p>
+                </div>
+
+                <div class="modal-section">
+                    <h3><i class="fas fa-star"></i> Core Features</h3>
+                    <ul>
+                        <li>The application works on a single page without refreshing</li>
+                        <li>Product data is fetched from an external API in real time</li>
+                        <li>The layout adjusts automatically for different screen sizes</li>
+                        <li>Users can switch between dark mode and light mode</li>
+                        <li>Choice is saved between sessions</li>
+                    </ul>
+                </div>
+
+                <div class="modal-section">
+                    <h3><i class="fas fa-sitemap"></i> Pages</h3>
+                    <ul>
+                        <li><strong>Home Page:</strong> Shows a short introduction about the application</li>
+                        <li><strong>Products Page:</strong> Displays all products with images, names, and prices</li>
+                        <li><strong>Product Details Page:</strong> Shows complete information about a selected product
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="modal-section">
+                    <h3><i class="fas fa-paint-brush"></i> User Interface</h3>
+                    <ul>
+                        <li>Uses cards to display product information clearly</li>
+                        <li>Shows a loading indicator while data is being fetched</li>
+                        <li>Displays simple error messages if data fails to load</li>
+                        <li>Smooth animations improve user experience</li>
+                        <li>Clean design with consistent colors and fonts</li>
+                    </ul>
+                </div>
+
+                <div class="modal-section">
+                    <h3><i class="fas fa-cogs"></i> Technologies Used</h3>
+                    <ul>
+                        <li><strong>Frontend:</strong> HTML5, CSS3, JavaScript, jQuery, Font Awesome</li>
+                        <li><strong>API:</strong> FakeStore API for product data</li>
+                        <li><strong>Responsive Design:</strong> Mobile, tablet, and desktop layouts</li>
+                    </ul>
+                </div>
+
+                <div class="modal-section">
+                    <h3><i class="fas fa-rocket"></i> How to Run</h3>
+                    <ul>
+                        <li><strong>Method 1:</strong> Open index.html directly in browser</li>
+                        <li><strong>Method 2:</strong> Host on a web server</li>
+                        <li><strong>Method 3:</strong> Open in code editor for development</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <p>ProductHub SPA - Modern Product Application | Version 2.0</p>
+            </div>
+        </div>
+    </div>
 
     <script>
         // API Configuration - Same as bak.html
@@ -833,6 +1080,39 @@
 
                 localStorage.setItem('darkMode', isDark);
             });
+        });
+
+        // Modal functionality
+        $(document).ready(function () {
+            // Info button click
+            $('#info-btn').click(function () {
+                $('#infoModal').fadeIn(300);
+                $('body').css('overflow', 'hidden'); // Prevent background scrolling
+            });
+
+            // Close modal button
+            $('#closeModal').click(function () {
+                closeModal();
+            });
+
+            // Close modal when clicking outside
+            $(document).on('click', function (e) {
+                if ($(e.target).hasClass('info-modal')) {
+                    closeModal();
+                }
+            });
+
+            // Close modal with Escape key
+            $(document).keydown(function (e) {
+                if (e.key === 'Escape' && $('#infoModal').is(':visible')) {
+                    closeModal();
+                }
+            });
+
+            function closeModal() {
+                $('#infoModal').fadeOut(300);
+                $('body').css('overflow', 'auto'); // Re-enable scrolling
+            }
         });
     </script>
 </body>
